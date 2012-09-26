@@ -10,12 +10,58 @@ public class Entry {
 	private List<String> input;
 	@Getter
 	private boolean valid;
+	@Getter
+	private String accountNumber = "";
 
 	public Entry(List<String> input) {
 		this.input = input;
 		valid = validate();
+		
+		if (isValid()) {
+			parseAccountNumber();
+		}
 	}
 	
+	private void parseAccountNumber() {
+		StringBuilder accountNumberBuilder = new StringBuilder(9);
+		for (int i=0; i < 9; i++) {
+			String topLine = input.get(0).substring(i * 3, (i+1) * 3);
+			String middleLine = input.get(1).substring(i * 3, (i+1) * 3);
+			String bottomLine = input.get(2).substring(i*3 , (i+1) * 3);
+			String checkLine = input.get(3).substring(i*3, (i+1) * 3);
+			accountNumberBuilder.append(convertLinesToCharacter(topLine, middleLine, bottomLine, checkLine));
+		}
+		accountNumber = accountNumberBuilder.toString();
+	}
+	
+	private String convertLinesToCharacter(String topLine, String middleLine, String bottomLine, String checkLine) {
+		String line = topLine + middleLine + bottomLine + checkLine;
+		switch (line) {
+		case "     |  |   ":
+			return "1";
+		case " _  _||_    ":
+			return "2";
+		case " _  _| _|   ":
+			return "3";
+		case "   |_|  |   ":
+			return "4";
+		case " _ |_  _|   ":
+			return "5";
+		case " _ |_ |_|   ":
+			return "6";
+		case " _   |  |   ":
+			return "7";
+		case " _ |_||_|   ":
+			return "8";
+		case " _ |_| _|   ":
+			return "9";
+		case " _ | ||_|   ":
+			return "0";
+		default:
+			return "";
+		}
+	}
+
 	private boolean validate() {
 		if (input.size() != 4) {
 			return false;
@@ -36,8 +82,4 @@ public class Entry {
 		return valid;
 	}
 
-	public String getAccountNumber() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -61,16 +61,16 @@ public class StoryOne {
 		}, false);
 	}
 	
-//	@Test
-//	public void parseDigit() {
-//		List<String> input = Arrays.asList(new String[] {
-//				"    _  _     _  _  _  _  _ ",
-//				"  | _| _||_||_ |_   ||_||_|",
-//				"  ||_  _|  | _||_|  ||_| _|",
-//				"                           "
-//		});
-//		Entry entry = new Entry(input);
-//		assertThat(entry.isValid(), is(true));
-//		assertThat(entry.getAccountNumber(), equalTo("123456789"));
-//	}
+	@Test
+	public void parseDigit() {
+		List<String> input = Arrays.asList(new String[] {
+				"    _  _     _  _  _  _  _ ",
+				"  | _| _||_||_ |_   ||_||_|",
+				"  ||_  _|  | _||_|  ||_| _|",
+				"                           "
+		});
+		Entry entry = new Entry(input);
+		assertThat(entry.isValid(), is(true));
+		assertThat(entry.getAccountNumber(), equalTo("123456789"));
+	}
 }
