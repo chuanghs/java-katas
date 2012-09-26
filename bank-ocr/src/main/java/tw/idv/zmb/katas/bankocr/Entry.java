@@ -4,14 +4,19 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.Getter;
+
 public class Entry {
 	private List<String> input;
+	@Getter
+	private boolean valid;
 
 	public Entry(List<String> input) {
 		this.input = input;
+		valid = validate();
 	}
 	
-	public boolean isValid() {
+	private boolean validate() {
 		if (input.size() != 4) {
 			return false;
 		} 
@@ -29,5 +34,10 @@ public class Entry {
 		valid = valid && blankLineMatcher.matches();
 		
 		return valid;
+	}
+
+	public String getAccountNumber() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
