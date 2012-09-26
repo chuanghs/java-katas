@@ -10,14 +10,37 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class StoryOne {
 	@Test
-	public void validateFourLines() {
+	public void validateFourLinesWith27Characters() {
 		List<String> input = Arrays.asList(new String[] {
-				"",
-				"",
-				"",
-				""
+				"                           ",
+				"                           ",
+				"                           ",
+				"                           "
 		});
 		Entry entry = new Entry(input);
 		assertThat(entry.isValid(), is(true));
+	}
+	
+	@Test
+	public void otherLineNumberIsInvalid()  {
+		List<String> input = Arrays.asList(new String[] {
+				"                           ",
+				"                           ",
+				"                           "
+		});		
+		Entry entry = new Entry(input);
+		assertThat(entry.isValid(), is(false));
+	}
+	
+	@Test
+	public void firstThreeLineContainsOnlyPipeAndUnderScores() {
+		List<String> input = Arrays.asList(new String[] {
+				"                           ",
+				"  a                   kadf ",
+				"                           ",
+				"                           "
+		});		
+		Entry entry = new Entry(input);
+		assertThat(entry.isValid(), is(false));
 	}
 }
