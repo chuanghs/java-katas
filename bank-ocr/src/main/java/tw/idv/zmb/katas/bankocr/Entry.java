@@ -12,15 +12,22 @@ public class Entry {
 	}
 	
 	public boolean isValid() {
-		boolean valid = true;
 		if (input.size() != 4) {
-			valid = false;
-		}
-		Pattern pattern = Pattern.compile("(||_| )*");
+			return false;
+		} 
+		
+		boolean valid = true;
+		
+		Pattern pattern = Pattern.compile("[|_ ]{27}");
 		for (int i=0; i < 3; i++) {
 			Matcher matcher = pattern.matcher(input.get(i));
 			valid = valid && matcher.matches();
 		}
+		
+		Pattern blankLinePattern = Pattern.compile("( ){27}");
+		Matcher blankLineMatcher = blankLinePattern.matcher(input.get(3));
+		valid = valid && blankLineMatcher.matches();
+		
 		return valid;
 	}
 }
