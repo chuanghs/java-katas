@@ -12,6 +12,8 @@ public class Entry {
 	private boolean valid;
 	@Getter
 	private String accountNumber = "";
+	@Getter
+	private int checkSum;
 
 	public Entry(List<String> input) {
 		this.input = input;
@@ -32,6 +34,11 @@ public class Entry {
 			accountNumberBuilder.append(convertLinesToCharacter(topLine, middleLine, bottomLine, checkLine));
 		}
 		accountNumber = accountNumberBuilder.toString();
+		checkSum = computeChecksum();
+		if (getCheckSum() != 0) {
+			accountNumber = "";
+			valid = false;
+		}
 	}
 	
 	private String convertLinesToCharacter(String topLine, String middleLine, String bottomLine, String checkLine) {
@@ -78,8 +85,17 @@ public class Entry {
 		Pattern blankLinePattern = Pattern.compile("( ){27}");
 		Matcher blankLineMatcher = blankLinePattern.matcher(input.get(3));
 		valid = valid && blankLineMatcher.matches();
-		
 		return valid;
+	}
+
+	public int computeChecksum() {
+		int checksum = 0;
+		for (int i=0; i < accountNumber.length(); i++) {
+			int digit = Integer.parseInt("" + accountNumber.charAt(i));
+			checksum += digit * (9-i);
+		}
+		checksum %= 11;
+		return checksum;
 	}
 
 }
