@@ -16,7 +16,7 @@ public class StoryOne {
 				string(' ', 27),
 				string(' ', 27),
 				string(' ', 27)
-		}, true);
+		}, false);
 	}
 	
 	private void validateInputWithResult(String[] lines, boolean result) {

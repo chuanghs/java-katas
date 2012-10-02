@@ -36,7 +36,6 @@ public class Entry {
 		accountNumber = accountNumberBuilder.toString();
 		checkSum = computeChecksum();
 		if (getCheckSum() != 0) {
-			accountNumber = "";
 			valid = false;
 		}
 	}
@@ -65,7 +64,7 @@ public class Entry {
 		case " _ | ||_|   ":
 			return "0";
 		default:
-			return "";
+			return "?";
 		}
 	}
 
@@ -91,11 +90,30 @@ public class Entry {
 	public int computeChecksum() {
 		int checksum = 0;
 		for (int i=0; i < accountNumber.length(); i++) {
-			int digit = Integer.parseInt("" + accountNumber.charAt(i));
-			checksum += digit * (9-i);
+			char ch = accountNumber.charAt(i);
+			if (Character.isDigit(ch)) {
+				int digit = Integer.parseInt("" + ch);
+				checksum += digit * (9-i);
+			} else {
+				return -1;
+			}
 		}
 		checksum %= 11;
 		return checksum;
+	}
+	
+	public String toString() {
+		return getAccountNumber() + getStatusName();
+	}
+	
+	private String getStatusName() {
+		if (isValid() && getCheckSum() == 0) {
+			return "";
+		}
+		if (getCheckSum() > 0) {
+			return " ERR";
+		}
+		return " ILL";
 	}
 
 }

@@ -7,8 +7,23 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+public class StoryThree {
 
-public class StoryTwo {
+	@Test
+	public void illegibleCharacterShowAsQuestionMark() {
+		List<String> input = Arrays.asList(new String[] {
+				" _  _  _  _  _  _  _  _  _ ",
+				" _||_||_ |_||_| _||_||_ |_ ",
+				" _|  | _||_||_||_||_||_| _|",
+				"                           "
+		});
+		Entry entry = new Entry(input);
+		assertThat(entry.isValid(), is(false));
+		assertThat(entry.getAccountNumber(), equalTo("3?588?865"));
+		assertThat(entry.getCheckSum(), equalTo(-1));
+		assertThat(entry.toString(), equalTo("3?588?865 ILL"));
+	}
+	
 	@Test
 	public void validAccountNumber() {
 		List<String> input = Arrays.asList(new String[] {
@@ -18,9 +33,7 @@ public class StoryTwo {
 				"                           "
 		});
 		Entry entry = new Entry(input);
-		assertThat(entry.isValid(), is(true));
-		assertThat(entry.getAccountNumber(), equalTo("345882865"));
-		assertThat(entry.getCheckSum(), equalTo(0));
+		assertThat(entry.toString(), equalTo("345882865"));
 	}
 	
 	@Test
@@ -32,8 +45,6 @@ public class StoryTwo {
 				"                           "
 		});		
 		Entry entry = new Entry(input);
-		assertThat(entry.isValid(), is(false));
-		assertThat(entry.getCheckSum(), equalTo(2));
-		assertThat(entry.getAccountNumber(), equalTo("245882865"));
+		assertThat(entry.toString(), equalTo("245882865 ERR"));
 	}
 }
